@@ -1,5 +1,4 @@
-![__results___26_0](https://github.com/IDrDomino/Structural-Protein-Sequences/assets/154571800/0469a205-fc97-4512-a250-90716c817059)# Structural-Protein-Sequences
-
+# Structural Protein Sequences
 
 ### Overview of the libraries and functions we imported:
 
@@ -180,6 +179,35 @@ axesObject.axis('equal')
 
 plt.show()
 ```
+
+![__results___36_1](https://github.com/IDrDomino/Structural-Protein-Sequences/assets/154571800/78db3900-7cfa-4096-9d29-733732d685bc)
+
+- According to the chart, proteins are the most prevalent type of molecule.
+
+- Filling train macromoleculeType with mode.
+
+```python
+x_train_copy['macromoleculeType'].fillna(x_train_copy['macromoleculeType'].mode()[0], inplace=True) # fill missing data with mode
+```
+
+- Mean and Std Method
+
+Handling missing values in the 'resolution' column of your DataFrame (x_train) by imputing them with random values generated from a uniform distribution within the range defined by the standard deviation (x_train_resol_std) and mean (x_train_resol_mean) of the existing non-null values.
+
+```python
+x_train_resol_std, x_train_resol_mean = x_train_copy.resolution.std(), x_train_copy.resolution.mean() # mean and standard deviation
+random = np.random.uniform(x_train_resol_std, x_train_resol_mean, 113120) # 113120 numbers of rows 
+x_train.resolution = x_train.resolution.mask(x_train.resolution.isnull(), random)
+```
+
+Applying a similar strategy to handle missing values in the 'resolution' column for your test dataset (x_test). You are calculating the mean and standard deviation of the 'resolution' column in the test dataset, generating random numbers from a uniform distribution within the specified range, and then replacing missing values with these random values.
+
+```python
+x_test_resol_std, x_test_resol_mean = x_test_copy.resolution.std(), x_test_copy.resolution.mean() # mean and standard deviation
+random = np.random.uniform(x_test_resol_std, x_test_resol_mean, 28281) # 28281 numbers of rows 
+x_test.resolution = x_test.resolution.mask(x_test.resolution.isnull(), random)
+```
+
 
 
 
